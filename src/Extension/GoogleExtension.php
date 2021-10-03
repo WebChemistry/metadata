@@ -20,7 +20,7 @@ final class GoogleExtension implements MetadataExtensionInterface
 		$wrapper->addMetaWithName('google-site-verification', $this->googleMetadata->getVerification());
 
 		if ($analytics = $this->googleMetadata->getAnalytics()) {
-			$wrapper->addHtmlFromTemplate(__DIR__ . '/templates/google-analytics.html', ['config' => $analytics]);
+			$wrapper->addHtmlFromTemplate(__DIR__ . '/templates/google-analytics.html', ['id' => $analytics]);
 		}
 	}
 

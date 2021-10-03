@@ -4,6 +4,7 @@ namespace WebChemistry\Metadata\Bridge\Nette\Event;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use WebChemistry\Metadata\Event\MetadataStartupEvent;
+use WebChemistry\Metadata\Metadata\FacebookMetadata;
 use WebChemistry\Metadata\Metadata\GoogleMetadata;
 
 final class MetadataProductionEventSubscriber implements EventSubscriberInterface
@@ -12,6 +13,7 @@ final class MetadataProductionEventSubscriber implements EventSubscriberInterfac
 	public function __construct(
 		private bool $production,
 		private GoogleMetadata $googleMetadata,
+		private FacebookMetadata $facebookMetadata,
 	)
 	{
 	}
@@ -27,6 +29,10 @@ final class MetadataProductionEventSubscriber implements EventSubscriberInterfac
 	{
 		if (!$this->production) {
 			$this->googleMetadata->setAnalytics(null);
+		}
+
+		if (!$this->production) {
+			$this->facebookMetadata->setPixel(null);
 		}
 	}
 

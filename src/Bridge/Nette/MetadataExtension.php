@@ -8,6 +8,7 @@ use Nette\Schema\Schema;
 use WebChemistry\Metadata\Bridge\Nette\Event\StartupEventSubscriber;
 use WebChemistry\Metadata\Extension\BasicExtension;
 use WebChemistry\Metadata\Extension\ColorExtension;
+use WebChemistry\Metadata\Extension\FacebookExtension;
 use WebChemistry\Metadata\Extension\FaviconExtension;
 use WebChemistry\Metadata\Extension\GoogleExtension;
 use WebChemistry\Metadata\Extension\OgExtension;
@@ -30,6 +31,7 @@ final class MetadataExtension extends CompilerExtension
 		'og' => OgExtension::class,
 		'color' => ColorExtension::class,
 		'google' => GoogleExtension::class,
+		'facebook' => FacebookExtension::class,
 		'structuredData' => StructuredDataExtension::class,
 	];
 
@@ -40,6 +42,7 @@ final class MetadataExtension extends CompilerExtension
 		'google' => GoogleMetadata::class,
 		'og' => OgMetadata::class,
 		'twitter' => TwitterMetadata::class,
+		'facebook' => Metadata\FacebookMetadata::class,
 		'breadcrumb' => Metadata\BreadcrumbMetadata::class,
 	];
 
@@ -62,6 +65,10 @@ final class MetadataExtension extends CompilerExtension
 			'google' => Expect::structure([
 				'verification' => Expect::string()->nullable(),
 				'analytics' => Expect::string()->nullable(),
+			]),
+			'facebook' => Expect::structure([
+				'verification' => Expect::string()->nullable(),
+				'pixel' => Expect::string()->nullable(),
 			]),
 			'og' => Expect::structure([
 				'image' => Expect::string()->nullable(),
