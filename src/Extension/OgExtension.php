@@ -5,6 +5,7 @@ namespace WebChemistry\Metadata\Extension;
 use Contributte\Imagist\Entity\PersistentImageInterface;
 use Contributte\Imagist\LinkGeneratorInterface;
 use InvalidArgumentException;
+use LogicException;
 use Nette\Http\Request;
 use WebChemistry\Metadata\Html\Wrapper;
 use WebChemistry\Metadata\Metadata\BasicMetadata;
@@ -59,21 +60,31 @@ final class OgExtension implements MetadataExtensionInterface
 
 	private function getImage(): ?string
 	{
-		$image = $this->ogMetadata->getImage();
+		foreach ($this->ogMetadata->getImages() as $image) {
+			if (!$image) {
+				continue;
+			}
 
-		if (!$image) {
-			return null;
+			if (is_string($image)) {
+				return MetadataUtility::replaceUrlVariables($image, $this->request);
+			}
+
+			if ($image instanceof PersistentImageInterface) {
+				if ($image->isEmpty()) {
+					continue;
+				}
+
+				if (!$this->imageLinkGenerator) {
+					throw new LogicException('Image link generator not found.');
+				}
+
+				return $this->imageLinkGenerator->link($image);
+			}
+
+			throw new InvalidArgumentException(sprintf('Image %s not supported.', get_debug_type($image)));
 		}
 
-		if (is_string($image)) {
-			return MetadataUtility::replaceUrlVariables($image, $this->request);
-		}
-
-		if ($image instanceof PersistentImageInterface) {
-			return $this->imageLinkGenerator?->link($image);
-		}
-
-		throw new InvalidArgumentException(sprintf('Image %s not supported.', get_debug_type($image)));
+		return null;
 	}
 
 }

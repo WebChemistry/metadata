@@ -2,20 +2,34 @@
 
 namespace WebChemistry\Metadata\Metadata;
 
+use InvalidArgumentException;
+
 final class OgMetadata
 {
 
 	private ?string $link = null;
 
+	/** @var mixed[] */
+	private array $images = [];
+
 	public function __construct(
-		private mixed $image = null,
+		mixed $image = null,
 	)
 	{
+		$this->setImage($image);
 	}
 
 	public function setImage(mixed $image): self
 	{
-		$this->image = $image;
+		if (!is_string($image) && !is_object($image) && $image !== null) {
+			throw new InvalidArgumentException(
+				sprintf('Image must be an string or object or null, %s given.', get_debug_type($image))
+			);
+		}
+
+		if ($image) {
+			array_unshift($this->images, $image);
+		}
 
 		return $this;
 	}
@@ -27,9 +41,12 @@ final class OgMetadata
 		return $this;
 	}
 
-	public function getImage(): mixed
+	/**
+	 * @return mixed[]
+	 */
+	public function getImages(): array
 	{
-		return $this->image;
+		return $this->images;
 	}
 
 	public function getLink(): ?string
