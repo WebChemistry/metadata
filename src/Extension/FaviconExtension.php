@@ -20,17 +20,21 @@ final class FaviconExtension implements MetadataExtensionInterface
 
 	public function head(Wrapper $wrapper): void
 	{
-		if (!($icon = $this->faviconMetadata->getIcon())) {
-			return;
+		foreach ($this->faviconMetadata->getIcons() as $icon) {
+			$wrapper->add('link', [
+				'rel' => $icon->getRel(),
+				'href' => MetadataUtility::replaceUrlVariables($icon->getLink(), $this->request),
+				'type' => $icon->getType(),
+				'sizes' => $icon->getSizes(),
+			]);
 		}
 
-		$icon = MetadataUtility::replaceUrlVariables($icon, $this->request);
-
-		$wrapper->add('link', [
-			'rel' => 'icon',
-			'href' => $icon,
-			'type' => $this->faviconMetadata->getType(),
-		]);
+		if ($manifest = $this->faviconMetadata->getManifest()) {
+			$wrapper->add('link', [
+				'rel' => 'manifest',
+				'href' => MetadataUtility::replaceUrlVariables($manifest, $this->request)
+			]);
+		}
 	}
 
 	public function body(Wrapper $wrapper): void

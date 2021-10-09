@@ -2,24 +2,38 @@
 
 namespace WebChemistry\Metadata\Metadata;
 
+use WebChemistry\Metadata\Metadata\Values\FaviconIcon;
+
 final class FaviconMetadata
 {
 
+	/** @var FaviconIcon[] */
+	private array $icons = [];
+
 	public function __construct(
-		private ?string $icon = null,
-		private ?string $type = null,
+		private ?string $manifest,
 	)
 	{
 	}
 
-	public function getIcon(): ?string
+	public function addIcon(string $link, ?string $type, ?string $sizes, string $rel = 'icon'): static
 	{
-		return $this->icon;
+		$this->icons[] = new FaviconIcon($link, $type, $sizes, $rel);
+
+		return $this;
 	}
 
-	public function getType(): ?string
+	/**
+	 * @return FaviconIcon[]
+	 */
+	public function getIcons(): array
 	{
-		return $this->type;
+		return $this->icons;
+	}
+
+	public function getManifest(): ?string
+	{
+		return $this->manifest;
 	}
 
 }

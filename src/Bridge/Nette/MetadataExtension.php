@@ -38,7 +38,6 @@ final class MetadataExtension extends CompilerExtension
 	private const METADATA = [
 		'basic' => BasicMetadata::class,
 		'color' => ColorMetadata::class,
-		'favicon' => FaviconMetadata::class,
 		'google' => GoogleMetadata::class,
 		'og' => OgMetadata::class,
 		'twitter' => TwitterMetadata::class,
@@ -59,8 +58,13 @@ final class MetadataExtension extends CompilerExtension
 				'color' => Expect::string()->nullable(),
 			]),
 			'favicon' => Expect::structure([
-				'icon' => Expect::string()->nullable(),
-				'type' => Expect::string()->nullable(),
+				'icons' => Expect::listOf(Expect::structure([
+					'link' => Expect::string()->required(),
+					'type' => Expect::string()->nullable(),
+					'sizes' => Expect::string()->nullable(),
+					'rel' => Expect::string('icon'),
+				])),
+				'manifest' => Expect::string()->nullable(),
 			]),
 			'google' => Expect::structure([
 				'verification' => Expect::string()->nullable(),
@@ -93,6 +97,14 @@ final class MetadataExtension extends CompilerExtension
 		foreach (self::METADATA as $name => $class) {
 			$builder->addDefinition($this->prefix('metadata.' . $name))
 				->setFactory($class, (array) ($config[$name] ?? []));
+		}
+
+		$favicon = $config['favicon'];
+		$service = $builder->addDefinition($this->prefix('metadata.favicon'))
+			->setFactory(FaviconMetadata::class, [$favicon->manifest]);
+
+		foreach ($favicon->icons as $icon) {
+			$service->addSetup('addIcon', (array) $icon);
 		}
 
 		$builder->addFactoryDefinition($this->prefix('factory'))
