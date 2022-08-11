@@ -2,7 +2,7 @@
 
 namespace WebChemistry\Metadata\Extension;
 
-use Nette\Http\Request;
+use Nette\Http\IRequest;
 use WebChemistry\Metadata\Html\Wrapper;
 use WebChemistry\Metadata\Metadata\FaviconMetadata;
 use WebChemistry\Metadata\MetadataExtensionInterface;
@@ -13,7 +13,7 @@ final class FaviconExtension implements MetadataExtensionInterface
 
 	public function __construct(
 		private FaviconMetadata $faviconMetadata,
-		private Request $request,
+		private IRequest $request,
 	)
 	{
 	}

@@ -6,7 +6,7 @@ use Contributte\Imagist\Entity\PersistentImageInterface;
 use Contributte\Imagist\LinkGeneratorInterface;
 use InvalidArgumentException;
 use LogicException;
-use Nette\Http\Request;
+use Nette\Http\IRequest;
 use WebChemistry\Metadata\Html\Wrapper;
 use WebChemistry\Metadata\Metadata\BasicMetadata;
 use WebChemistry\Metadata\Metadata\OgMetadata;
@@ -21,7 +21,7 @@ final class OgExtension implements MetadataExtensionInterface
 		private OgMetadata $ogMetadata,
 		private BasicMetadata $basicMetadata,
 		private TwitterMetadata $twitterMetadata,
-		private Request $request,
+		private IRequest $request,
 		private ?LinkGeneratorInterface $imageLinkGenerator = null,
 	)
 	{

@@ -3,7 +3,7 @@
 namespace WebChemistry\Metadata\Utility;
 
 use InvalidArgumentException;
-use Nette\Http\Request;
+use Nette\Http\IRequest;
 use Nette\Utils\Strings;
 
 final class MetadataUtility
@@ -38,7 +38,7 @@ final class MetadataUtility
 		return str_replace([']]>', '<!', '</'], [']]\u003E', '\u003C!', '<\/'], $json);
 	}
 
-	public static function replaceUrlVariables(string $str, Request $request): string
+	public static function replaceUrlVariables(string $str, IRequest $request): string
 	{
 		$url = $request->getUrl();
 
