@@ -3,6 +3,7 @@
 namespace WebChemistry\Metadata\Bridge\Nette;
 
 use WebChemistry\Metadata\Metadata\BasicMetadata;
+use WebChemistry\Metadata\Metadata\LanguageMetadata;
 use WebChemistry\Metadata\Metadata\OgMetadata;
 
 trait TMetadataPresenter
@@ -14,10 +15,18 @@ trait TMetadataPresenter
 
 	protected OgMetadata $ogMetadata;
 
-	final public function injectMetadata(BasicMetadata $basicMetadata, OgMetadata $ogMetadata, MetadataComponentFactory $metadataComponentFactory): void
+	protected LanguageMetadata $languageMetadata;
+
+	final public function injectMetadata(
+		BasicMetadata $basicMetadata,
+		OgMetadata $ogMetadata,
+		LanguageMetadata $languageMetadata,
+		MetadataComponentFactory $metadataComponentFactory,
+	): void
 	{
 		$this->basicMetadata = $basicMetadata;
 		$this->ogMetadata = $ogMetadata;
+		$this->languageMetadata = $languageMetadata;
 		$this->metaComponentFactory = $metadataComponentFactory;
 	}
 

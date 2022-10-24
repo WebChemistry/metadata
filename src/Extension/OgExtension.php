@@ -27,6 +27,14 @@ final class OgExtension implements MetadataExtensionInterface
 	{
 	}
 
+	/**
+	 * @return array<string, string>
+	 */
+	public function htmlAttributes(): array
+	{
+		return [];
+	}
+
 	public function head(Wrapper $wrapper): void
 	{
 		$image = $this->getImage();

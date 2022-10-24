@@ -15,6 +15,14 @@ final class GoogleExtension implements MetadataExtensionInterface
 	{
 	}
 
+	/**
+	 * @return array<string, string>
+	 */
+	public function htmlAttributes(): array
+	{
+		return [];
+	}
+
 	public function head(Wrapper $wrapper): void
 	{
 		$wrapper->addMetaWithName('google-site-verification', $this->googleMetadata->getVerification());

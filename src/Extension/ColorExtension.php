@@ -15,6 +15,14 @@ final class ColorExtension implements MetadataExtensionInterface
 	{
 	}
 
+	/**
+	 * @return array<string, string>
+	 */
+	public function htmlAttributes(): array
+	{
+		return [];
+	}
+
 	public function head(Wrapper $wrapper): void
 	{
 		$color = $this->colorMetadata->getColor();

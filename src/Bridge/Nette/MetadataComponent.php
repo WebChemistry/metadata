@@ -37,6 +37,15 @@ final class MetadataComponent extends Control
 		$this->renderEl($this->metadata->getFooter());
 	}
 
+	/**
+	 * @param array<string, string> $defaults
+	 * @return array<string, string>
+	 */
+	public function getHtmlAttributes(array $defaults = []): array
+	{
+		return $this->metadata->getHtmlAttributes($defaults);
+	}
+
 	private function renderEl(Html $el): void
 	{
 		echo $el->render(0);

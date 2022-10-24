@@ -11,6 +11,7 @@ use WebChemistry\Metadata\Extension\ColorExtension;
 use WebChemistry\Metadata\Extension\FacebookExtension;
 use WebChemistry\Metadata\Extension\FaviconExtension;
 use WebChemistry\Metadata\Extension\GoogleExtension;
+use WebChemistry\Metadata\Extension\LanguageExtension;
 use WebChemistry\Metadata\Extension\OgExtension;
 use WebChemistry\Metadata\Extension\StructuredDataExtension;
 use WebChemistry\Metadata\Metadata;
@@ -33,6 +34,7 @@ final class MetadataExtension extends CompilerExtension
 		'google' => GoogleExtension::class,
 		'facebook' => FacebookExtension::class,
 		'structuredData' => StructuredDataExtension::class,
+		'language' => LanguageExtension::class,
 	];
 
 	private const METADATA = [
@@ -43,6 +45,7 @@ final class MetadataExtension extends CompilerExtension
 		'twitter' => TwitterMetadata::class,
 		'facebook' => Metadata\FacebookMetadata::class,
 		'breadcrumb' => Metadata\BreadcrumbMetadata::class,
+		'language' => Metadata\LanguageMetadata::class,
 	];
 
 	public function getConfigSchema(): Schema
@@ -79,6 +82,9 @@ final class MetadataExtension extends CompilerExtension
 			]),
 			'twitter' => Expect::structure([
 				'site' => Expect::string()->nullable(),
+			]),
+			'language' => Expect::structure([
+				'lang' => Expect::string()->nullable(),
 			]),
  		]);
 	}

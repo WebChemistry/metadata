@@ -15,6 +15,14 @@ final class FacebookExtension implements MetadataExtensionInterface
 	{
 	}
 
+	/**
+	 * @return array<string, string>
+	 */
+	public function htmlAttributes(): array
+	{
+		return [];
+	}
+
 	public function head(Wrapper $wrapper): void
 	{
 		$wrapper->addMetaWithName('facebook-domain-verification', $this->facebookMetadata->getVerification());

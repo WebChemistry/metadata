@@ -22,6 +22,21 @@ final class Metadata
 	{
 	}
 
+	/**
+	 * @param array<string, string> $defaults
+	 * @return array<string, string>
+	 */
+	public function getHtmlAttributes(array $defaults = []): array
+	{
+		$attributes = $defaults;
+
+		foreach ($this->extensions as $extension) {
+			$attributes = array_merge($attributes, $extension->htmlAttributes());
+		}
+
+		return $attributes;
+	}
+
 	public function getHead(): Html
 	{
 		$this->startup();
