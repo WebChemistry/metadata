@@ -13,6 +13,7 @@ use WebChemistry\Metadata\Extension\FaviconExtension;
 use WebChemistry\Metadata\Extension\GoogleExtension;
 use WebChemistry\Metadata\Extension\LanguageExtension;
 use WebChemistry\Metadata\Extension\OgExtension;
+use WebChemistry\Metadata\Extension\RssExtension;
 use WebChemistry\Metadata\Extension\StructuredDataExtension;
 use WebChemistry\Metadata\Metadata;
 use WebChemistry\Metadata\Metadata\BasicMetadata;
@@ -35,6 +36,7 @@ final class MetadataExtension extends CompilerExtension
 		'facebook' => FacebookExtension::class,
 		'structuredData' => StructuredDataExtension::class,
 		'language' => LanguageExtension::class,
+		'rss' => RssExtension::class,
 	];
 
 	private const METADATA = [
@@ -46,6 +48,7 @@ final class MetadataExtension extends CompilerExtension
 		'facebook' => Metadata\FacebookMetadata::class,
 		'breadcrumb' => Metadata\BreadcrumbMetadata::class,
 		'language' => Metadata\LanguageMetadata::class,
+		'rss' => Metadata\RssMetadata::class,
 	];
 
 	public function getConfigSchema(): Schema
@@ -85,6 +88,9 @@ final class MetadataExtension extends CompilerExtension
 			]),
 			'language' => Expect::structure([
 				'lang' => Expect::string()->nullable(),
+			]),
+			'rss' => Expect::structure([
+				'link' => Expect::string()->nullable(),
 			]),
  		]);
 	}
