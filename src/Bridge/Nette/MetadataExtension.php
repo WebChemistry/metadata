@@ -46,9 +46,9 @@ final class MetadataExtension extends CompilerExtension
 		'og' => OgMetadata::class,
 		'twitter' => TwitterMetadata::class,
 		'facebook' => Metadata\FacebookMetadata::class,
-		'breadcrumb' => Metadata\BreadcrumbMetadata::class,
 		'language' => Metadata\LanguageMetadata::class,
 		'rss' => Metadata\RssMetadata::class,
+		'structuredData' => Metadata\StructuredDataMetadata::class,
 	];
 
 	public function getConfigSchema(): Schema

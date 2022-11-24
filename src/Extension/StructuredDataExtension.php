@@ -3,7 +3,7 @@
 namespace WebChemistry\Metadata\Extension;
 
 use WebChemistry\Metadata\Html\Wrapper;
-use WebChemistry\Metadata\Metadata\BreadcrumbMetadata;
+use WebChemistry\Metadata\Metadata\StructuredDataMetadata;
 use WebChemistry\Metadata\MetadataExtensionInterface;
 use WebChemistry\Metadata\Utility\MetadataUtility;
 
@@ -11,7 +11,7 @@ final class StructuredDataExtension implements MetadataExtensionInterface
 {
 
 	public function __construct(
-		private BreadcrumbMetadata $breadcrumbMetadata,
+		private StructuredDataMetadata $structuredDataMetadata,
 	)
 	{
 	}
@@ -26,7 +26,9 @@ final class StructuredDataExtension implements MetadataExtensionInterface
 
 	public function head(Wrapper $wrapper): void
 	{
-		$this->createBreadcrumb($wrapper);
+		foreach ($this->structuredDataMetadata->getItems() as $item) {
+			$this->toJsonLd($wrapper, $item->toJson());
+		}
 	}
 
 	public function body(Wrapper $wrapper): void
@@ -35,34 +37,6 @@ final class StructuredDataExtension implements MetadataExtensionInterface
 
 	public function footer(Wrapper $wrapper): void
 	{
-	}
-
-	private function createBreadcrumb(Wrapper $wrapper): void
-	{
-		$items = $this->breadcrumbMetadata->getItems();
-
-		if (!$items) {
-			return;
-		}
-
-		$list = [];
-
-		$pos = 1;
-		foreach ($items as $name => $link) {
-			$list[] = [
-				'@type' => 'ListItem',
-				'position' => $pos++,
-				'name' => $name,
-				'item' => $link,
-			];
- 		}
-
-		// https://developers.google.com/search/docs/advanced/structured-data/breadcrumb
-		$this->toJsonLd($wrapper, [
-			'@context' => 'https://schema.org',
-			'@type' => 'BreadcrumbList',
-			'itemListElement' => $list,
-		]);
 	}
 
 	private function toJsonLd(Wrapper $wrapper, array $array): void
