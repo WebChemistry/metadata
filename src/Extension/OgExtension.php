@@ -38,6 +38,7 @@ final class OgExtension implements MetadataExtensionInterface
 	public function head(Wrapper $wrapper): void
 	{
 		$image = $this->getImage();
+		$siteName = $this->ogMetadata->getSiteName();
 
 		$wrapper->addMetaWithProperty('og:title', $this->basicMetadata->getTitle());
 
@@ -46,6 +47,10 @@ final class OgExtension implements MetadataExtensionInterface
 			$wrapper->addMetaWithProperty('og:image', $image);
 			$wrapper->addMetaWithProperty('og:image:url', $image);
 			$wrapper->addMetaWithProperty('og:image:secure_url', $image);
+		}
+
+		if ($siteName) {
+			$wrapper->addMetaWithProperty('og:site_name', $siteName);
 		}
 
 		$wrapper->addMetaWithProperty('og:description', $this->basicMetadata->getDescription());

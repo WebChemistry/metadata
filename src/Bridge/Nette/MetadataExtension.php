@@ -82,6 +82,7 @@ final class MetadataExtension extends CompilerExtension
 			]),
 			'og' => Expect::structure([
 				'image' => Expect::string()->nullable(),
+				'siteName' => Expect::string()->nullable(),
 			]),
 			'twitter' => Expect::structure([
 				'site' => Expect::string()->nullable(),

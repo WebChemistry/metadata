@@ -14,9 +14,22 @@ final class OgMetadata
 
 	public function __construct(
 		mixed $image = null,
+		private ?string $siteName = null,
 	)
 	{
 		$this->setImage($image);
+	}
+
+	public function setSiteName(?string $siteName): self
+	{
+		$this->siteName = $siteName;
+
+		return $this;
+	}
+
+	public function getSiteName(): ?string
+	{
+		return $this->siteName;
 	}
 
 	public function setImage(mixed $image): self
