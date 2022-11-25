@@ -8,12 +8,13 @@ final class Person implements StructuredData
 	/** @var mixed[] */
 	private array $data;
 
-	public function __construct(string $name)
+	public function __construct(string $name, ?string $url = null)
 	{
-		$this->data = [
+		$this->data = array_filter([
 			'@type' => 'Person',
 			'name' => $name,
-		];
+			'url' => $url,
+		]);
 	}
 
 	/**
@@ -21,7 +22,10 @@ final class Person implements StructuredData
 	 */
 	public function toJson(): array
 	{
-		return $this->data;
+		return array_filter(
+			$this->data,
+			fn (mixed $value): bool => $value !== null,
+		);
 	}
 
 }
