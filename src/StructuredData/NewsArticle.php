@@ -29,6 +29,17 @@ final class NewsArticle implements StructuredData
 		];
 	}
 
+	public function addImage(string $image): self
+	{
+		if (!isset($this->data['image'])) {
+			$this->data['image'] = [];
+		}
+
+		$this->data['image'][] = $image;
+
+		return $this;
+	}
+
 	public function setDescription(?string $description): self
 	{
 		$this->data['description'] = $description;
