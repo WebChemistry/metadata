@@ -3,6 +3,7 @@
 namespace WebChemistry\Metadata\Bridge\Nette;
 
 use Nette\DI\CompilerExtension;
+use Nette\DI\Definitions\Statement;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use WebChemistry\Metadata\Bridge\Nette\Event\StartupEventSubscriber;
@@ -65,12 +66,12 @@ final class MetadataExtension extends CompilerExtension
 			]),
 			'favicon' => Expect::structure([
 				'icons' => Expect::listOf(Expect::structure([
-					'link' => Expect::string()->required(),
+					'link' => Expect::anyOf(Expect::string(), Expect::type(Statement::class))->required(),
 					'type' => Expect::string()->nullable(),
 					'sizes' => Expect::string()->nullable(),
 					'rel' => Expect::string('icon'),
 				])),
-				'manifest' => Expect::string()->nullable(),
+				'manifest' => Expect::anyOf(Expect::string(), Expect::type(Statement::class))->nullable(),
 			]),
 			'google' => Expect::structure([
 				'verification' => Expect::string()->nullable(),
@@ -93,7 +94,7 @@ final class MetadataExtension extends CompilerExtension
 			'rss' => Expect::structure([
 				'link' => Expect::string()->nullable(),
 			]),
- 		]);
+		]);
 	}
 
 	public function loadConfiguration(): void
